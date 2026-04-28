@@ -591,4 +591,4 @@ with tab1:
                     stop = True
 
         if not stop:
-            st.success("✅ **Suite à l'analyse de vos symptômes, une visite à l'urgence ne semble pas nécessaire. En cas de doute ou si votre état semble s'aggraver, vous pouvez
+            st.success("""✅ **Suite à l'analyse de vos symptômes, une visite à l'urgence ne semble pas nécessaire. En cas de doute ou si votre état semble s'aggraver, vous pouvez recommencer le quiz ou appeler directement le 811 (Info-Santé).**""")

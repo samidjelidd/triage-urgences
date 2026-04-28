@@ -691,4 +691,4 @@ with tab2:
                     if demander_oui_non() == "oui": return "Urgence"
                     if demander_oui_non() == "oui": return "Urgence"
                     if "4" not in choix_list:
-                        if demander
+                        if demander_oui_non() == "oui": return "Urgence"

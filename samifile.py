@@ -592,3 +592,103 @@ with tab1:
 
         if not stop:
             st.success("""✅ **Suite à l'analyse de vos symptômes, une visite à l'urgence ne semble pas nécessaire. En cas de doute ou si votre état semble s'aggraver, vous pouvez recommencer le quiz ou appeler directement le 811 (Info-Santé).**""")
+
+# ==========================================
+# ONGLET 2 : LA SIMULATION DE DONNÉES 
+# ==========================================
+with tab2:
+    st.header("Simulation de l'impact de l'application")
+    
+    colA, colB = st.columns(2)
+    with colA:
+        proportions_input = st.text_input("Entrez les proportions d'utilisation à tester, séparées par des virgules (ex: 10, 25, 50) :", "10, 25, 50")
+    with colB:
+        nb_simulations_texte = st.text_input("Nombre d'essais par proportion (ex: 1000) :", "1000")
+
+    if st.button("Lancer la simulation 📊"):
+        with st.spinner('Calcul de la simulation en cours...'):
+            
+            # Fonction exacte de ton Notebook
+            def demander_oui_non():
+                return random.choices(["oui", "non"], weights=[0.1, 0.9])[0]
+
+            def evaluer_patient_sim(age, choix_list):
+                temps_fievre = None
+
+                if "1" in choix_list or "8" in choix_list: return "Urgence"
+                if "2" in choix_list and age == "1": return "Urgence"
+                if "2" in choix_list and "7" in choix_list: return "Urgence"
+                if "3" in choix_list and "7" in choix_list: return "Urgence"
+                if "4" in choix_list and age == "1": return "Urgence"
+                if "9" in choix_list and "2" in choix_list: return "Urgence"
+                if "10" in choix_list:
+                    if age == "1" or age == "2" or age == "5": return "Urgence"
+                if "11" in choix_list and "2" in choix_list: return "Urgence"
+                if "13" in choix_list and "3" in choix_list: return "Urgence"
+                if "13" in choix_list and "2" in choix_list: return "Urgence"
+                if "13" in choix_list and age == "5": return "Clinique"
+                if "14" in choix_list and age == "5": return "Clinique"
+                if "15" in choix_list and "2" in choix_list: return "Urgence"
+                if "15" in choix_list and "3" in choix_list: return "Urgence"
+                if "16" in choix_list and "2" in choix_list: return "Urgence"
+                if "17" in choix_list and "2" in choix_list: return "Urgence"
+
+                if "2" in choix_list:
+                    if demander_oui_non() == "oui": return "Urgence"
+                    temps_fievre = random.choice(["1", "2", "3", "4", "5"])
+                if "3" in choix_list:
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if "6" in choix_list:
+                        if demander_oui_non() == "oui": return "Urgence"
+                if "4" in choix_list:
+                    if "14" in choix_list:
+                        if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if age == "1" or age == "2" or age == "3":
+                        if demander_oui_non() == "oui": return "Urgence"
+                if "5" in choix_list:
+                    if demander_oui_non() == "oui":
+                        if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if "2" in choix_list:
+                        if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                if "6" in choix_list:
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui":
+                        if demander_oui_non() == "oui": return "Urgence"
+                if "7" in choix_list:
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                if "9" in choix_list:
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                if "10" in choix_list:
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                if "11" in choix_list:
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                if "12" in choix_list:
+                    if age == "1" or age == "2" or age == "3":
+                        if "2" in choix_list:
+                            if temps_fievre == "3": return "Urgence"
+                    if "2" not in choix_list:
+                        if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if "4" not in choix_list:
+                        if demander

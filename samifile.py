@@ -94,7 +94,7 @@ with tab1:
 
             if "5" in choix_list:
                 st.markdown("#### 🤕 Maux de tête")
-                q_tete_soudain = st.radio("Votre mal de tête est-il arriver subitement?", ["Non", "Oui"], horizontal=True).lower()
+                q_tete_soudain = st.radio("Votre mal de tête est-il arrivé subitement?", ["Non", "Oui"], horizontal=True).lower()
                 if q_tete_soudain == "oui":
                     q_tete_extreme = st.radio("Votre mal de tête est-il extrêmement douloureux?", ["Non", "Oui"], horizontal=True).lower()
                 q_tete_trauma = st.radio("Avez-vous vécu un traumatisme récemment? (ex: chute, accident)", ["Non", "Oui"], horizontal=True).lower()

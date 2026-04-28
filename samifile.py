@@ -692,3 +692,124 @@ with tab2:
                     if demander_oui_non() == "oui": return "Urgence"
                     if "4" not in choix_list:
                         if demander_oui_non() == "oui": return "Urgence"
+                    if age == "4" or age == "5":
+                        if "2" in choix_list:
+                            if demander_oui_non() == "oui": return "Urgence"
+                        if demander_oui_non() == "oui": return "Urgence"
+                        if demander_oui_non() == "oui": return "Urgence"
+                        if demander_oui_non() == "oui": return "Urgence"
+                if "13" in choix_list:
+                    if "14" in choix_list:
+                        if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                if "14" in choix_list:
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if age == "4" or age == "5":
+                        if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                if "15" in choix_list:
+                    if "14" not in choix_list:
+                        if age == "4" or age == "5":
+                            if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                if "16" in choix_list:
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if "15" not in choix_list:
+                        if demander_oui_non() == "oui": return "Urgence"
+                if "17" in choix_list:
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                if "18" in choix_list:
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if "12" not in choix_list:
+                        if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if demander_oui_non() == "oui": return "Urgence"
+                    if "4" not in choix_list and "12" not in choix_list:
+                        if demander_oui_non() == "oui": return "Urgence"
+
+                return "Pas besoin"
+
+            liste_texte = proportions_input.split(',')
+            proportions_a_tester = [float(texte.strip()) for texte in liste_texte]
+            nb_simulations = int(nb_simulations_texte)
+            patients_par_sim = 1000
+            symptomes_possibles = list(symptomes_dict.keys())
+            ages_possibles = list(ages_dict.keys())
+
+            moyennes_urgences = []
+            moyennes_cliniques = []
+            moyennes_pas_besoin = []
+
+            for prop in proportions_a_tester:
+                proportion_app = prop / 100.0
+                total_urgence = 0
+                total_clinique = 0
+                total_pas_besoin = 0
+
+                for sim in range(nb_simulations):
+                    for patient in range(patients_par_sim):
+                        age = random.choice(ages_possibles)
+                        nb_symptomes = random.randint(1, 4)
+                        choix_list = random.sample(symptomes_possibles, nb_symptomes)
+
+                        hasard = random.random()
+                        if hasard > proportion_app:
+                            total_urgence = total_urgence + 1
+                        else:
+                            statut = evaluer_patient_sim(age, choix_list)
+                            if statut == "Urgence":
+                                total_urgence = total_urgence + 1
+                            elif statut == "Clinique":
+                                total_clinique = total_clinique + 1
+                            else:
+                                total_pas_besoin = total_pas_besoin + 1
+
+                moyenne_urg = total_urgence / nb_simulations
+                moyenne_cli = total_clinique / nb_simulations
+                moyenne_pas = total_pas_besoin / nb_simulations
+
+                moyennes_urgences.append(moyenne_urg)
+                moyennes_cliniques.append(moyenne_cli)
+                moyennes_pas_besoin.append(moyenne_pas)
+
+            # --- GRAPHIQUE MATPLOTLIB EXACT ---
+            fig, ax = plt.subplots()
+            largeur = 0.25
+            urgences = []
+            cliniques = []
+            pas_besoin = []
+            etiquettes_axe_x = []
+
+            index = 0
+            for prop in proportions_a_tester:
+                urgences.append(index - largeur)
+                cliniques.append(index)
+                pas_besoin.append(index + largeur)
+                etiquettes_axe_x.append(str(prop) + "%")
+                index = index + 1
+
+            ax.bar(urgences, moyennes_urgences, width=largeur, label="Aller à l'urgence", color="red")
+            ax.bar(cliniques, moyennes_cliniques, width=largeur, label="Clinique / Médecin", color="orange")
+            ax.bar(pas_besoin, moyennes_pas_besoin, width=largeur, label="Pas besoin / 811", color="green")
+
+            ax.set_title("Impact de l'utilisation de l'application sur l'orientation des patients")
+            ax.set_ylabel("Nombre de patients (Moyenne)")
+            ax.set_xlabel("Taux d'utilisation de l'application (%)")
+            ax.set_xticks(cliniques)
+            ax.set_xticklabels(etiquettes_axe_x)
+            ax.legend()
+            
+            st.pyplot(fig)
+            st.success("✅ Simulation terminée avec succès !")
